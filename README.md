@@ -1,3 +1,40 @@
+## Project Overview ⚽🎉
+
+This is mini soccer match app, based od SportRadar Api. 
+As a user, you can view soccer matches table data from 3 last seasons and check some match details, as match timeline, statistics, teams players.
+
+## Tech/framework used 
+
+| Tech                                                      |        
+| -------------------------------------------------------   | 
+| [React](https://reactjs.org/)                             | 
+| [React Router](https://reacttraining.com/react-router/)   |
+| [React Bootstrap](https://react-bootstrap.github.io/)     | 
+| [Day.js](https://day.js.org/)                             | 
+| [React Icons](https://react-icons.github.io/react-icons/) |
+| [Lint-staged](https://github.com/okonet/lint-staged)      |
+| [Eslint](https://eslint.org/)                             |
+| [Prettier](https://prettier.io/)                          |
+
+## CORS support
+As Sportradar API is B2B and are not are not intended to be called directly from a client application, to be able to use this front-end app, you can use browser extension, for example [Allow CORS](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf) or [herokuapp](https://cors-anywhere.herokuapp.com/)
+
+## Installation in short: 
+
+```bash
+
+git clone https://github.com/agatagree/soccer-app.git
+
+npm install
+
+npm run start
+
+remember about CORS: turn on CORS extension plugin to your browser
+
+```
+<br>
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
