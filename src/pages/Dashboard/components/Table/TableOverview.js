@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Alert, Card, Table } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { API_BASE_URL } from "api/consts";
@@ -6,16 +6,23 @@ import { useFetch } from "utils/useFetch";
 import { DashboardContext } from "pages/Dashboard/providers/DashboardProvider";
 import { Loader } from "components/Loader";
 import { getTeamData } from "../../../../utils/getTeamData";
+import { CustomPagination } from "./CustomPagination";
 import { getColorForResult } from "./utils/getColorForResult";
 import dayjs from "dayjs";
 
 export const TableOverview = () => {
   const { selectedSeason } = useContext(DashboardContext);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { data, loading, error, errorStatusCode } = useFetch(
     `${API_BASE_URL}seasons/${selectedSeason}/schedules.json?api_key=${process.env.REACT_APP_APIKEY}`,
     selectedSeason
   );
+
+  const dataPerPage = 20;
+  const indexLastData = currentPage * dataPerPage;
+  const indexFirstData = indexLastData - dataPerPage;
+  const currentData = data.schedules?.slice(indexFirstData, indexLastData);
 
   if (error) {
     return (
@@ -43,7 +50,7 @@ export const TableOverview = () => {
             </tr>
           </thead>
           <tbody>
-            {data.schedules.map((event, index) => (
+            {currentData.map((event, index) => (
               <LinkContainer
                 to={`/${event.sport_event.id}`}
                 style={{ cursor: "pointer" }}
@@ -63,11 +70,7 @@ export const TableOverview = () => {
                         ),
                       }}
                     >
-                      {getTeamData("home", event.sport_event.competitors).map(
-                        (team) => (
-                          <span key={team.id}>{team.name}</span>
-                        )
-                      )}
+                      {getTeamData("home", event.sport_event.competitors)}
                     </p>
                   </td>
                   <td className="fw-bold text-center text-nowrap">
@@ -85,11 +88,7 @@ export const TableOverview = () => {
                         ),
                       }}
                     >
-                      {getTeamData("away", event.sport_event.competitors).map(
-                        (team) => (
-                          <span key={team.id}>{team.name}</span>
-                        )
-                      )}
+                      {getTeamData("away", event.sport_event.competitors)}
                     </p>
                   </td>
                   <td className="text-center text-secondary font-weight-light d-none d-md-table-cell">
@@ -105,6 +104,12 @@ export const TableOverview = () => {
             ))}
           </tbody>
         </Table>
+        <CustomPagination
+          dataPerPage={dataPerPage}
+          totalData={data.schedules.length}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
       </Card>
     );
 };

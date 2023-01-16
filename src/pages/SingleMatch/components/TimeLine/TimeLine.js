@@ -1,5 +1,6 @@
 import { Container, Table, Alert } from "react-bootstrap";
 import { CgArrowRight } from "react-icons/cg";
+import { getTeamData } from "utils/getTeamData";
 import { formatText } from "../../utils/formatText";
 import { EventIcon } from "./components/Icon";
 
@@ -45,9 +46,9 @@ export const TimeLine = ({ data }) => {
                         </p>
                         <p className="text-secondary">
                           {event.competitor === "home" &&
-                            data.sport_event.competitors[0].name}
+                            getTeamData("home", data.sport_event.competitors)}
                           {event.competitor === "away" &&
-                            data.sport_event.competitors[1].name}
+                            getTeamData("away", data.sport_event.competitors)}
                         </p>
                         <p className="text-secondary">
                           {event.players ? ` ${event.players[0].name}` : null}

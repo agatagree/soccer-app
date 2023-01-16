@@ -8,18 +8,15 @@ import { VscDebugStart } from "react-icons/vsc";
 export const eventTypeList = [
   {
     type: "yellow_card",
-    icon: <BsFillFileFill style={{ color: "#FFDF4A" }} />,
-    color: "var(--main-yellow)",
+    icon: <BsFillFileFill style={{ color: "var(--main-yellow)" }} />,
   },
   {
     type: "red_card",
-    icon: <BsFillFileFill style={{ color: "#FA463A" }} />,
-    color: "var(--main-red)",
+    icon: <BsFillFileFill style={{ color: "var(--main-red)" }} />,
   },
   {
     type: "yellow_red_card",
-    icon: <BsFillFileFill style={{ color: "#FA9731" }} />,
-    color: "var(--main-orange",
+    icon: <BsFillFileFill style={{ color: "var(--main-orange)" }} />,
   },
   {
     type: "period_start",
