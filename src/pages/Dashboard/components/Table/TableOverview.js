@@ -1,42 +1,25 @@
-import { useState, useEffect } from "react";
+import { useContext } from "react";
 import { Alert, Card, Table } from "react-bootstrap";
 import { API_BASE_URL } from "api/consts";
+import { useFetch } from "utils/useFetch";
+import { DashboardContext } from "pages/Dashboard/providers/DashboardProvider";
 import { Loader } from "components/Loader";
-import { getTeamData } from "./utils/getTeamData";
 import { getColorForResult } from "./utils/getColorForResult";
+import { getTeamData } from "./utils/getTeamData";
 import dayjs from "dayjs";
 
 export const TableOverview = () => {
-  const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [statusCode, setStatusCode] = useState();
+  const { selectedSeason } = useContext(DashboardContext);
 
-  useEffect(() => {
-    fetch(
-      `${API_BASE_URL}seasons/sr:season:77453/schedules.json?api_key=${process.env.REACT_APP_APIKEY}`
-    )
-      .then((res) => {
-        setStatusCode(res.status);
-        return res.json();
-      })
-      .then(
-        (result) => {
-          setLoading(true);
-          setData(result);
-          setError(null);
-        },
-        (error) => {
-          setLoading(true);
-          setError(error);
-        }
-      );
-  }, []);
+  const { data, loading, error, errorStatusCode } = useFetch(
+    `${API_BASE_URL}seasons/${selectedSeason}/schedules.json?api_key=${process.env.REACT_APP_APIKEY}`,
+    selectedSeason
+  );
 
   if (error) {
     return (
       <Alert variant="danger">
-        Error: {statusCode}, {error.message}
+        Error: {errorStatusCode}, {error.message}
       </Alert>
     );
   } else if (loading === false) {

@@ -5,6 +5,7 @@
     "^react(.*)",
     "^api/",
     "^routes/",
+    "^utils/",
     "^pages/",
     "^providers/",
     "^components/",

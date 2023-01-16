@@ -1,5 +1,5 @@
-import { Dashboard } from "pages/Dashboard";
 import { Container } from "react-bootstrap";
+import { Dashboard } from "pages/Dashboard";
 import "./styles/global.css";
 
 export const App = () => {
