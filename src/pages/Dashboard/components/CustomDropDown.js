@@ -15,7 +15,7 @@ export const CustomDropDown = () => {
   if (error) {
     return (
       <Alert variant="danger">
-        Error: Error: {errorStatusCode}, {error.message}
+        Error: {errorStatusCode}, {error.message}
       </Alert>
     );
   } else if (loading === false) {

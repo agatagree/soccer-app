@@ -1,11 +1,12 @@
 import { useContext } from "react";
 import { Alert, Card, Table } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 import { API_BASE_URL } from "api/consts";
 import { useFetch } from "utils/useFetch";
 import { DashboardContext } from "pages/Dashboard/providers/DashboardProvider";
 import { Loader } from "components/Loader";
+import { getTeamData } from "../../../../utils/getTeamData";
 import { getColorForResult } from "./utils/getColorForResult";
-import { getTeamData } from "./utils/getTeamData";
 import dayjs from "dayjs";
 
 export const TableOverview = () => {
@@ -43,58 +44,64 @@ export const TableOverview = () => {
           </thead>
           <tbody>
             {data.schedules.map((event, index) => (
-              <tr key={index} className="align-middle">
-                <td className="text-nowrap d-none d-sm-table-cell">
-                  {dayjs(event.sport_event.start_time).format("YYYY-MM-DD")}
-                </td>
-                <td className="text-end rounded">
-                  <p
-                    className="rounded p-2 m-2 d-inline-block"
-                    style={{
-                      backgroundColor: getColorForResult(
-                        event.sport_event_status.home_score,
-                        event.sport_event_status.away_score
-                      ),
-                    }}
-                  >
-                    {getTeamData("home", event.sport_event.competitors).map(
-                      (team) => (
-                        <span key={team.id}>{team.name}</span>
-                      )
-                    )}
-                  </p>
-                </td>
-                <td className="fw-bold text-center text-nowrap">
-                  {event.sport_event_status.status === "closed"
-                    ? `${event.sport_event_status.home_score} : ${event.sport_event_status.away_score}`
-                    : "-"}
-                </td>
-                <td>
-                  <p
-                    className="rounded p-2 m-2 d-inline-block"
-                    style={{
-                      backgroundColor: getColorForResult(
-                        event.sport_event_status.away_score,
-                        event.sport_event_status.home_score
-                      ),
-                    }}
-                  >
-                    {getTeamData("away", event.sport_event.competitors).map(
-                      (team) => (
-                        <span key={team.id}>{team.name}</span>
-                      )
-                    )}
-                  </p>
-                </td>
-                <td className="text-center text-secondary font-weight-light d-none d-md-table-cell">
-                  {event.sport_event_status.status === "closed"
-                    ? `${event.sport_event_status.period_scores[0].home_score} : ${event.sport_event_status.period_scores[0].away_score}`
-                    : "-"}
-                </td>
-                <td className="d-none d-md-table-cell">
-                  {event.sport_event.venue.name}
-                </td>
-              </tr>
+              <LinkContainer
+                to={`/${event.sport_event.id}`}
+                style={{ cursor: "pointer" }}
+                key={index}
+              >
+                <tr className="align-middle">
+                  <td className="text-nowrap d-none d-sm-table-cell">
+                    {dayjs(event.sport_event.start_time).format("YYYY-MM-DD")}
+                  </td>
+                  <td className="text-end rounded">
+                    <p
+                      className="rounded p-2 m-2 d-inline-block"
+                      style={{
+                        backgroundColor: getColorForResult(
+                          event.sport_event_status.home_score,
+                          event.sport_event_status.away_score
+                        ),
+                      }}
+                    >
+                      {getTeamData("home", event.sport_event.competitors).map(
+                        (team) => (
+                          <span key={team.id}>{team.name}</span>
+                        )
+                      )}
+                    </p>
+                  </td>
+                  <td className="fw-bold text-center text-nowrap">
+                    {event.sport_event_status.status === "closed"
+                      ? `${event.sport_event_status.home_score} : ${event.sport_event_status.away_score}`
+                      : "-"}
+                  </td>
+                  <td>
+                    <p
+                      className="rounded p-2 m-2 d-inline-block"
+                      style={{
+                        backgroundColor: getColorForResult(
+                          event.sport_event_status.away_score,
+                          event.sport_event_status.home_score
+                        ),
+                      }}
+                    >
+                      {getTeamData("away", event.sport_event.competitors).map(
+                        (team) => (
+                          <span key={team.id}>{team.name}</span>
+                        )
+                      )}
+                    </p>
+                  </td>
+                  <td className="text-center text-secondary font-weight-light d-none d-md-table-cell">
+                    {event.sport_event_status.status === "closed"
+                      ? `${event.sport_event_status.period_scores[0].home_score} : ${event.sport_event_status.period_scores[0].away_score}`
+                      : "-"}
+                  </td>
+                  <td className="d-none d-md-table-cell">
+                    {event.sport_event.venue.name}
+                  </td>
+                </tr>
+              </LinkContainer>
             ))}
           </tbody>
         </Table>
