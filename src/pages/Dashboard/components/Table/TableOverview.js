@@ -3,6 +3,8 @@ import { Alert, Card, Table } from "react-bootstrap";
 import { API_BASE_URL } from "api/consts";
 import { Loader } from "components/Loader";
 import { getTeamData } from "./utils/getTeamData";
+import { getColorForResult } from "./utils/getColorForResult";
+import dayjs from "dayjs";
 
 export const TableOverview = () => {
   const [data, setData] = useState([]);
@@ -45,29 +47,69 @@ export const TableOverview = () => {
         <Table hover>
           <thead className="bg-light">
             <tr className="text-nowrap align-middle">
-              <th className="d-none d-sm-table-cell py-3">Teams</th>
+              <th className="d-none d-sm-table-cell py-3">Date</th>
+              <th className="text-end">Home team</th>
               <th className="text-center d-none d-sm-table-cell">Score</th>
+              <th className="text-center d-table-cell d-sm-none"></th>
+              <th>Away team</th>
+              <th className="text-center text-secondary d-none d-md-table-cell">
+                1st Half
+              </th>
+              <th className="d-none d-md-table-cell">Stadium</th>
             </tr>
           </thead>
           <tbody>
             {data.schedules.map((event, index) => (
               <tr key={index} className="align-middle">
-                <td>
-                  {getTeamData("home", event.sport_event.competitors).map(
-                    (team) => (
-                      <p key={team.id}>{team.name}</p>
-                    )
-                  )}
-                  {getTeamData("away", event.sport_event.competitors).map(
-                    (team) => (
-                      <p key={team.id}>{team.name}</p>
-                    )
-                  )}
+                <td className="text-nowrap d-none d-sm-table-cell">
+                  {dayjs(event.sport_event.start_time).format("YYYY-MM-DD")}
+                </td>
+                <td className="text-end rounded">
+                  <p
+                    className="rounded p-2 m-2 d-inline-block"
+                    style={{
+                      backgroundColor: getColorForResult(
+                        event.sport_event_status.home_score,
+                        event.sport_event_status.away_score
+                      ),
+                    }}
+                  >
+                    {getTeamData("home", event.sport_event.competitors).map(
+                      (team) => (
+                        <span key={team.id}>{team.name}</span>
+                      )
+                    )}
+                  </p>
                 </td>
                 <td className="fw-bold text-center text-nowrap">
                   {event.sport_event_status.status === "closed"
                     ? `${event.sport_event_status.home_score} : ${event.sport_event_status.away_score}`
                     : "-"}
+                </td>
+                <td>
+                  <p
+                    className="rounded p-2 m-2 d-inline-block"
+                    style={{
+                      backgroundColor: getColorForResult(
+                        event.sport_event_status.away_score,
+                        event.sport_event_status.home_score
+                      ),
+                    }}
+                  >
+                    {getTeamData("away", event.sport_event.competitors).map(
+                      (team) => (
+                        <span key={team.id}>{team.name}</span>
+                      )
+                    )}
+                  </p>
+                </td>
+                <td className="text-center text-secondary font-weight-light d-none d-md-table-cell">
+                  {event.sport_event_status.status === "closed"
+                    ? `${event.sport_event_status.period_scores[0].home_score} : ${event.sport_event_status.period_scores[0].away_score}`
+                    : "-"}
+                </td>
+                <td className="d-none d-md-table-cell">
+                  {event.sport_event.venue.name}
                 </td>
               </tr>
             ))}

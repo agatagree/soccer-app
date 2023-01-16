@@ -9,3 +9,9 @@
 p {
   margin: 0 !important;
 }
+
+:root {
+  --main-red: #fa463a;
+  --main-green: #a7c72b;
+  --main-orange: #fa9731;
+}
