@@ -1,0 +1,15 @@
+{
+  "tabWidth": 2,
+  "useTabs": false,
+  "importOrder": [
+    "^react(.*)",
+    "^api/",
+    "^routes/",
+    "^pages/",
+    "^providers/",
+    "^components/",
+    "antd/(.*)",
+    "<THIRD_PARTY_MODULES>",
+    "@/(.*)"
+  ]
+}
