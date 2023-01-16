@@ -27,6 +27,8 @@ git clone https://github.com/agatagree/soccer-app.git
 
 npm install
 
+create .env file with your private API key, from SportRadar API
+
 npm run start
 
 remember about CORS: turn on CORS extension plugin to your browser
