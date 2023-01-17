@@ -12,7 +12,7 @@ As a user, you can view soccer matches table data from 3 last seasons and check 
 | [React Bootstrap](https://react-bootstrap.github.io/)     | 
 | [Day.js](https://day.js.org/)                             | 
 | [React Icons](https://react-icons.github.io/react-icons/) |
-| [Lint-staged](https://github.com/okonet/lint-staged)      |
+| [Unit tests](https://reactjs.org/docs/testing.html)       |
 | [Eslint](https://eslint.org/)                             |
 | [Prettier](https://prettier.io/)                          |
 
